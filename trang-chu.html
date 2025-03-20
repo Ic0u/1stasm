@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - FPT Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        :root {
+            --primary-color: #ff5733;
+            --secondary-color: #16171d;
+            --accent-color: #ff7f50;
+            --dark-bg: #0a0a0c;
+            --card-bg: #16171d;
+            --text-primary: #ffffff;
+            --text-secondary: #8b8b8b;
+            --glow-color: rgba(255, 87, 51, 0.3);
+            --success-color: #4CAF50;
+            --info-color: #2196F3;
+            --warning-color: #FFC107;
+            --danger-color: #F44336;
+            --scrollbar-width: 10px;
+            --scrollbar-track: #0d0d0f;
+            --scrollbar-thumb: #2a2a2e;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 87, 51, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 87, 51, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 87, 51, 0); }
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: var(--scrollbar-width);
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+
+        body {
+            padding: 2rem;
+            color: var(--text-primary);
+            background: var(--dark-bg);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            animation: slideUp 0.5s ease-out;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 1rem;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-section img {
+            height: 40px;
+            width: auto;
+        }
+
+        .welcome-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-left: auto;
+            margin-right: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+            position: relative;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-picture::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .profile-role {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .notification-badge {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notification-badge i {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .notification-badge:hover i {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--primary-color);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px var(--glow-color);
+        }
+
+        .search-bar input:focus + i {
+            color: var(--primary-color);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .action-button {
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-button:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .action-button i {
+            font-size: 1.2rem;
+        }
+
+        .infographic-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .infographic-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .infographic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .infographic-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .infographic-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(255, 87, 51, 0.1);
+            color: var(--primary-color);
+        }
+
+        .infographic-chart {
+            height: 150px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chart-bar {
+            width: 30px;
+            background: rgba(255, 87, 51, 0.2);
+            border-radius: 15px;
+            position: relative;
+            margin: 0 5px;
+        }
+
+        .chart-bar-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--primary-color);
+            border-radius: 15px;
+            transition: height 1s ease;
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .chart-value {
+            position: absolute;
+            top: -25px;
+            font-size: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px var(--glow-color);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, var(--glow-color) 0%, transparent 70%);
+            opacity: 0.1;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease-out 0.3s both;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+        }
+
+        .feature-card:nth-child(1) { background: linear-gradient(135deg, #4158D0, #C850C0); }
+        .feature-card:nth-child(2) { background: linear-gradient(135deg, #0093E9, #80D0C7); }
+        .feature-card:nth-child(3) { background: linear-gradient(135deg, #8E2DE2, #4A00E0); }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .progress-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .progress-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px var(--glow-color);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-circle {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .progress-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-circle circle.progress {
+            stroke: var(--primary-color);
+            stroke-dasharray: 339.292;
+            stroke-dashoffset: calc(339.292 * (1 - var(--progress, 0)));
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .progress-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .task-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .task-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 87, 51, 0.1);
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 2px solid var(--text-secondary);
+            margin-right: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .task-checkbox.completed {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .task-checkbox.completed::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .task-due {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calendar-section {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 15px;
+        }
+
+        .calendar-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .calendar-nav button {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calendar-nav button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-nav button:hover::before {
+            width: 100%;
+            height: 100%;
+            opacity: 0.2;
+            border-radius: 8px;
+        }
+
+        .calendar-nav button i {
+            position: relative;
+            z-index: 1;
+        }
+
+        .calendar-nav button:hover i {
+            transform: scale(1.1);
+            color: var(--primary-color);
+        }
+
+        .month-display {
+            font-weight: 600;
+            color: var(--primary-color);
+            min-width: 120px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .month-display:hover {
+            background: rgba(255, 87, 51, 0.1);
+        }
+
+        .month-display::after {
+            content: '\F282';
+            font-family: "bootstrap-icons";
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            text-align: center;
+        }
+
+        .calendar-day {
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background: rgba(255, 87, 51, 0.1);
+        }
+
+        .calendar-day.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--primary-color);
+        }
+
+        .calendar-day.weekend {
+            color: var(--text-secondary);
+        }
+
+        .news-section {
+            animation: fadeIn 0.5s ease-out 0.6s both;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .news-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            position: relative;
+            height: 400px;
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 12px 40px var(--glow-color);
+        }
+
+        .news-card:hover .news-image img {
+            transform: scale(1.1);
+        }
+
+        .news-card:hover .news-content {
+            transform: translateY(-60px);
+        }
+
+        .news-card:hover .news-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .news-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        }
+
+        .news-content {
+            padding: 1.8rem;
+            transition: transform 0.5s ease;
+            background: linear-gradient(to bottom, rgba(22, 23, 29, 0.8), var(--card-bg));
+        }
+
+        .news-date {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .news-category {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .news-title {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .news-actions {
+            padding: 0 1.8rem 1.8rem;
+            display: flex;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .news-button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .news-button.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .custom-toast {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                gap: 1rem;
+                position: relative;
+                top: 0;
+            }
+
+            .profile-section {
+                margin: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .quick-actions {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .action-button {
+                width: calc(50% - 0.5rem);
+                justify-content: center;
+            }
+
+            .stats-grid,
+            .features,
+            .progress-section,
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-grid {
+                font-size: 0.8rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+        }
+
+        .banner-section {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(135deg, #4158D0, #C850C0);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            padding: 3rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .banner-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80') center/cover;
+            opacity: 0.1;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top right, rgba(255, 87, 51, 0.3), transparent);
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .banner-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .banner-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .banner-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .banner-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .banner-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .banner-button:hover i {
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 768px) {
+            .banner-section {
+                height: 250px;
+                padding: 2rem;
+            }
+
+            .banner-content h1 {
+                font-size: 2rem;
+            }
+
+            .banner-content p {
+                font-size: 1rem;
+            }
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: none;
+                border: none;
+                color: var(--text-primary);
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 1000;
+            }
+
+            .quick-actions {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                padding: 1rem;
+                border-radius: 0 0 20px 20px;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .action-button {
+                width: 100%;
+            }
+        }
+
+        .animate {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+
+        [data-parallax] {
+            transition: transform 0.2s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <div class="logo-section">
+            <img src="https://companieslogo.com/img/orig/FPT.VN_BIG.D-b2da87b8.png?t=1722927800" alt="FPT Education Logo">
+            <h1 class="welcome-text">Chào mừng trở lại, Học viên!</h1>
+        </div>
+        <div class="profile-section">
+            <div class="profile-picture">
+                <img src="https://i.imgur.com/naQhaw6.jpeg" alt="Profile Picture">
+            </div>
+            <div class="profile-info">
+                <span class="profile-name">Nguyễn Nam</span>
+                <span class="profile-role">TS01718</span>
+            </div>
+            <div class="notification-badge">
+                <i class="bi bi-bell"></i>
+                <span class="notification-count">3</span>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Tìm kiếm khóa học...">
+            <i class="bi bi-search"></i>
+        </div>
+    </div>
+
+    <div class="banner-section">
+        <div class="banner-content">
+            <h1>Khám phá tương lai học tập</h1>
+            <p>Nền tảng giáo dục hiện đại với công nghệ tiên tiến</p>
+            <button class="banner-button" onclick="showToast('Đã click vào Tìm hiểu thêm')">
+                <span>Tìm hiểu thêm</span>
+                <i class="bi bi-arrow-right"></i>
+            </button>
+        </div>
+        <div class="banner-overlay"></div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card" onclick="showToast('Thống kê sinh viên')">
+            <div class="stat-number" data-value="15000">0</div>
+            <div class="stat-label">Sinh viên đang theo học</div>
+        </div>
+        <div class="stat-card" onclick="showToast('Tỷ lệ việc làm')">
+            <div class="stat-number" data-value="95">0</div>
+            <div class="stat-label">Tỷ lệ có việc làm sau tốt nghiệp</div>
+        </div>
+        <div class="stat-card" onclick="showToast('Đối tác')">
+            <div class="stat-number" data-value="50">0</div>
+            <div class="stat-label">Đối tác doanh nghiệp</div>
+        </div>
+        <div class="stat-card" onclick="showToast('Kinh nghiệm')">
+            <div class="stat-number" data-value="20">0</div>
+            <div class="stat-label">Năm kinh nghiệm đào tạo</div>
+        </div>
+    </div>
+
+    <div class="progress-section">
+        <div class="progress-card">
+            <div class="progress-header">
+                <div class="progress-title">
+                    <i class="bi bi-graph-up"></i>
+                    Tiến độ học tập
+                </div>
+            </div>
+            <div class="progress-circle">
+                <svg viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="54"/>
+                    <circle class="progress" cx="60" cy="60" r="54" style="--progress: 0.74;"/>
+                </svg>
+                <div class="progress-value">74%</div>
+            </div>
+        </div>
+        <div class="progress-card">
+            <div class="progress-header">
+                <div class="progress-title">
+                    <i class="bi bi-check2-square"></i>
+                    Mục tiêu tuần
+                </div>
+            </div>
+            <div class="task-list">
+                <div class="task-item" onclick="toggleTask(this)">
+                    <div class="task-checkbox completed"></div>
+                    <div class="task-content">
+                        <div class="task-title">Hoàn thành bài tập Lab 7</div>
+                        <div class="task-due">
+                            <i class="bi bi-calendar-event"></i>
+                            Hạn: 20/03/2024
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item" onclick="toggleTask(this)">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-title">Nộp bài Assignment 1</div>
+                        <div class="task-due">
+                            <i class="bi bi-calendar-event"></i>
+                            Hạn: 25/03/2024
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <h3>
+                <i class="bi bi-mortarboard"></i>
+                Đào tạo chất lượng
+            </h3>
+            <p>Chương trình học được thiết kế theo chuẩn quốc tế, đáp ứng nhu cầu doanh nghiệp với công nghệ mới nhất</p>
+        </div>
+        <div class="feature-card">
+            <h3>
+                <i class="bi bi-building"></i>
+                Cơ sở vật chất
+            </h3>
+            <p>Môi trường học tập hiện đại với trang thiết bị tiên tiến, không gian sáng tạo và thư viện đa phương tiện</p>
+        </div>
+        <div class="feature-card">
+            <h3>
+                <i class="bi bi-briefcase"></i>
+                Cơ hội việc làm
+            </h3>
+            <p>Kết nối trực tiếp với mạng lưới doanh nghiệp rộng lớn, đảm bảo cơ hội việc làm cho sinh viên</p>
+        </div>
+    </div>
+
+    <div class="calendar-section">
+        <div class="calendar-header">
+            <div class="calendar-title">
+                <i class="bi bi-calendar3"></i>
+                Lịch học
+            </div>
+            <div class="calendar-nav">
+                <button onclick="prevMonth()" title="Tháng trước">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <div class="month-display" onclick="showToast('Chọn tháng khác')">Tháng 3/2024</div>
+                <button onclick="nextMonth()" title="Tháng sau">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="calendar-grid">
+            <div class="calendar-day weekend">CN</div>
+            <div class="calendar-day">T2</div>
+            <div class="calendar-day">T3</div>
+            <div class="calendar-day">T4</div>
+            <div class="calendar-day">T5</div>
+            <div class="calendar-day">T6</div>
+            <div class="calendar-day weekend">T7</div>
+            <!-- Calendar days -->
+            <div class="calendar-day weekend">1</div>
+            <div class="calendar-day has-event">2</div>
+            <div class="calendar-day">3</div>
+            <div class="calendar-day has-event">4</div>
+            <div class="calendar-day active">5</div>
+            <div class="calendar-day">6</div>
+            <div class="calendar-day weekend">7</div>
+            <div class="calendar-day weekend">8</div>
+            <div class="calendar-day">9</div>
+            <div class="calendar-day has-event">10</div>
+            <div class="calendar-day">11</div>
+            <div class="calendar-day">12</div>
+            <div class="calendar-day has-event">13</div>
+            <div class="calendar-day weekend">14</div>
+        </div>
+    </div>
+
+    <div class="news-section">
+        <h2>
+            <i class="bi bi-newspaper"></i>
+            Tin tức mới nhất
+        </h2>
+        <div class="news-grid">
+            <div class="news-card" onclick="showToast('Đã mở bài viết: Thông báo tuyển sinh 2024')">
+                <div class="news-content">
+                    <div class="news-date">
+                        <i class="bi bi-calendar2-event"></i>
+                        15/03/2024
+                    </div>
+                    <h3 class="news-title">Thông báo tuyển sinh 2024</h3>
+                    <p class="news-excerpt">FPT Education thông báo kế hoạch tuyển sinh năm học mới 2024. Nhiều chương trình học bổng hấp dẫn...</p>
+                </div>
+            </div>
+            <div class="news-card" onclick="showToast('Đã mở bài viết: Hội thảo công nghệ')">
+                <div class="news-content">
+                    <div class="news-date">
+                        <i class="bi bi-calendar2-event"></i>
+                        10/03/2024
+                    </div>
+                    <h3 class="news-title">Hội thảo công nghệ</h3>
+                    <p class="news-excerpt">Chuỗi hội thảo về công nghệ mới nhất sẽ được tổ chức tại các cơ sở của FPT Education...</p>
+                </div>
+            </div>
+            <div class="news-card" onclick="showToast('Đã mở bài viết: Thành tích sinh viên')">
+                <div class="news-content">
+                    <div class="news-date">
+                        <i class="bi bi-calendar2-event"></i>
+                        05/03/2024
+                    </div>
+                    <h3 class="news-title">Thành tích sinh viên</h3>
+                    <p class="news-excerpt">Sinh viên FPT Education đạt giải cao trong các cuộc thi quốc tế về công nghệ thông tin...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Animate numbers in stat cards
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start) + (end > 100 ? '+' : '%');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Initialize number animations
+        document.querySelectorAll('.stat-number').forEach(statNumber => {
+            const value = parseInt(statNumber.dataset.value);
+            animateValue(statNumber, 0, value, 2000);
+        });
+
+        // Toggle task completion
+        function toggleTask(element) {
+            const checkbox = element.querySelector('.task-checkbox');
+            checkbox.classList.toggle('completed');
+            showToast(checkbox.classList.contains('completed') ? 'Nhiệm vụ đã hoàn thành!' : 'Đã bỏ đánh dấu nhiệm vụ');
+        }
+
+        // Calendar navigation
+        function prevMonth() {
+            showToast('Đã chuyển đến tháng trước');
+        }
+
+        function nextMonth() {
+            showToast('Đã chuyển đến tháng sau');
+        }
+
+        // Toast notification system
+        function showToast(message) {
+            const toastContainer = document.querySelector('.toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.innerHTML = message;
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Add hover effect to calendar days
+        document.querySelectorAll('.calendar-day').forEach(day => {
+            if (!day.classList.contains('weekend') && !isNaN(day.textContent)) {
+                day.addEventListener('click', () => {
+                    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('active'));
+                    day.classList.add('active');
+                    showToast(`Đã chọn ngày ${day.textContent}/3/2024`);
+                });
+            }
+        });
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.banner-button, .action-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                let ripple = document.createElement('div');
+                ripple.className = 'ripple';
+                this.appendChild(ripple);
+
+                let rect = this.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
+
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+
+                setTimeout(() => ripple.remove(), 1000);
+            });
+        });
+
+        // Intersection Observer for animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.stat-card, .feature-card, .progress-card, .news-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Parallax effect for banner
+        document.addEventListener('mousemove', (e) => {
+            const banner = document.querySelector('.banner-section');
+            const rect = banner.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const bannerContent = banner.querySelector('.banner-content');
+            const bannerImage = banner.querySelector('.banner-image');
+
+            const moveX = (x - rect.width / 2) / 50;
+            const moveY = (y - rect.height / 2) / 50;
+
+            bannerContent.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            bannerImage.style.transform = `translate(${-moveX}px, ${-moveY}px)`;
+        });
+
+        // Mobile menu toggle
+        let isMenuOpen = false;
+        function toggleMenu() {
+            const quickActions = document.querySelector('.quick-actions');
+            isMenuOpen = !isMenuOpen;
+            quickActions.style.display = isMenuOpen ? 'flex' : 'none';
+            document.querySelector('.menu-toggle i').className = 
+                isMenuOpen ? 'bi bi-x-lg' : 'bi bi-list';
+        }
+    </script>
+</body>
+</html> 
